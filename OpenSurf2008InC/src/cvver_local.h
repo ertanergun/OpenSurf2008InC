@@ -1,0 +1,12 @@
+#ifndef __VERSION_H__
+#define __VERSION_H__
+
+#define CV_MAJOR_VERSION    2
+#define CV_MINOR_VERSION    1
+#define CV_SUBMINOR_VERSION 0
+
+#define CVAUX_STR_EXP(__A)  #__A
+#define CVAUX_STR(__A)      CVAUX_STR_EXP(__A)
+#define CV_VERSION          CVAUX_STR(CV_MAJOR_VERSION) "." CVAUX_STR(CV_MINOR_VERSION) "." CVAUX_STR(CV_SUBMINOR_VERSION)
+
+#endif
