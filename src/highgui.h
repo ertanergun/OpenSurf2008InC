@@ -1,9 +1,50 @@
+/*M///////////////////////////////////////////////////////////////////////////////////////
+//
+//  IMPORTANT: READ BEFORE DOWNLOADING, COPYING, INSTALLING OR USING.
+//
+//  By downloading, copying, installing or using the software you agree to this license.
+//  If you do not agree to this license, do not download, install,
+//  copy or use the software.
+//
+//
+//                        Intel License Agreement
+//                For Open Source Computer Vision Library
+//
+// Copyright (C) 2000, Intel Corporation, all rights reserved.
+// Third party copyrights are property of their respective owners.
+//
+// Redistribution and use in source and binary forms, with or without modification,
+// are permitted provided that the following conditions are met:
+//
+//   * Redistribution's of source code must retain the above copyright notice,
+//     this list of conditions and the following disclaimer.
+//
+//   * Redistribution's in binary form must reproduce the above copyright notice,
+//     this list of conditions and the following disclaimer in the documentation
+//     and/or other materials provided with the distribution.
+//
+//   * The name of Intel Corporation may not be used to endorse or promote products
+//     derived from this software without specific prior written permission.
+//
+// This software is provided by the copyright holders and contributors "as is" and
+// any express or implied warranties, including, but not limited to, the implied
+// warranties of merchantability and fitness for a particular purpose are disclaimed.
+// In no event shall the Intel Corporation or contributors be liable for any direct,
+// indirect, incidental, special, exemplary, or consequential damages
+// (including, but not limited to, procurement of substitute goods or services;
+// loss of use, data, or profits; or business interruption) however caused
+// and on any theory of liability, whether in contract, strict liability,
+// or tort (including negligence or otherwise) arising in any way out of
+// the use of this software, even if advised of the possibility of such damage.
+//
+//M*/
+
 #ifndef __OPENCV_HIGHGUI_H__
 #define __OPENCV_HIGHGUI_H__
 
 #ifndef SKIP_INCLUDES
 
-  #include "cxcore_local.h"
+  #include "cxcore.h"
   #if defined WIN32 || defined _WIN32 || defined WIN64 || defined _WIN64
     #include <windows.h>
 	#undef min
@@ -432,7 +473,75 @@ CV_INLINE IplROI RectToROI( RECT r )
 
 #if defined __cplusplus && !defined CV_NO_CVV_IMAGE
 
+/* CvvImage class definition */
+class CV_EXPORTS CvvImage
+{
+public:
+    CvvImage();
+    virtual ~CvvImage();
+
+    /* Create image (BGR or grayscale) */
+    virtual bool  Create( int width, int height, int bits_per_pixel, int image_origin = 0 );
+
+    /* Load image from specified file */
+    virtual bool  Load( const char* filename, int desired_color = 1 );
+
+    /* Load rectangle from the file */
+    virtual bool  LoadRect( const char* filename,
+                            int desired_color, CvRect r );
+
+#if defined WIN32 || defined _WIN32
+    virtual bool  LoadRect( const char* filename,
+                            int desired_color, RECT r )
+    {
+        return LoadRect( filename, desired_color,
+                         cvRect( r.left, r.top, r.right - r.left, r.bottom - r.top ));
+    }
+#endif
+
+    /* Save entire image to specified file. */
+    virtual bool  Save( const char* filename );
+
+    /* Get copy of input image ROI */
+    virtual void  CopyOf( CvvImage& image, int desired_color = -1 );
+    virtual void  CopyOf( IplImage* img, int desired_color = -1 );
+
+    IplImage* GetImage() { return m_img; };
+    virtual void  Destroy(void);
+
+    /* width and height of ROI */
+    int Width() { return !m_img ? 0 : !m_img->roi ? m_img->width : m_img->roi->width; };
+    int Height() { return !m_img ? 0 : !m_img->roi ? m_img->height : m_img->roi->height;};
+    int Bpp() { return m_img ? (m_img->depth & 255)*m_img->nChannels : 0; };
+
+    virtual void  Fill( int color );
+
+    /* draw to highgui window */
+    virtual void  Show( const char* window );
+
+#if defined WIN32 || defined _WIN32
+    /* draw part of image to the specified DC */
+    virtual void  Show( HDC dc, int x, int y, int width, int height,
+                        int from_x = 0, int from_y = 0 );
+    /* draw the current image ROI to the specified rectangle of the destination DC */
+    virtual void  DrawToHDC( HDC hDCDst, RECT* pDstRect );
+#endif
+
+protected:
+
+    IplImage*  m_img;
+};
+
+typedef CvvImage CImage;
+
+
 #endif /* __cplusplus */
 
+
+/****************************************************************************************\
+*                                    New interface                                       *
+\****************************************************************************************/
+
+#include "highgui.hpp"
 
 #endif

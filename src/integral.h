@@ -15,11 +15,11 @@
 #define min(a,b) ((a) < (b) ? (a) : (b))
 #endif
 */
-#include "cv_local.h"
+#include <cv.h>
 
 //! Computes the integral image of image img.  Assumes source image to be a 
 //! 32-bit floating point.  Returns IplImage in 32-bit float form.
-//IplImage *Integral(IplImage *img);
+IplImage *Integral(IplImage *img);
 
 //! Computes the sum of pixels within the rectangle specified by the top-left start
 //! co-ordinate and size
@@ -29,7 +29,6 @@ _inline float BoxIntegral(IplImage *img, int row, int col, int rows, int cols)
   float *data = (float *) img->imageData;
   int step = img->widthStep/sizeof(float);
   float A = 0.0f, B = 0.0f, C = 0.0f, D = 0.0f;
-  //data = (float *) img->imageData;
 
   // The subtraction by one for row/col is because row/col is inclusive.
   r1 = min(row,          img->height) - 1;
@@ -38,14 +37,10 @@ _inline float BoxIntegral(IplImage *img, int row, int col, int rows, int cols)
   c2 = min(col + cols,   img->width)  - 1;
 
   
-  if (r1 >= 0 && c1 >= 0) 
-	  A = data[r1 * step + c1];
-  if (r1 >= 0 && c2 >= 0) 
-	  B = data[r1 * step + c2];
-  if (r2 >= 0 && c1 >= 0) 
-	  C = data[r2 * step + c1];
-  if (r2 >= 0 && c2 >= 0) 
-	  D = data[r2 * step + c2];
+  if (r1 >= 0 && c1 >= 0) A = data[r1 * step + c1];
+  if (r1 >= 0 && c2 >= 0) B = data[r1 * step + c2];
+  if (r2 >= 0 && c1 >= 0) C = data[r2 * step + c1];
+  if (r2 >= 0 && c2 >= 0) D = data[r2 * step + c2];
 
   return max(0.f, A - B - C + D);
 }

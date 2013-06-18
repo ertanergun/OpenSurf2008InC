@@ -10,24 +10,22 @@ int surfDetDes(IplImage *img,  /* image to find Ipoints in */
 					   int size /*Size of Array */)
 {	
   int ipts_size;
-  FastHessian fh;
-  IplImage int_img;
+  FastHessian fh;	
 
   // Create integral-image representation of the image
-  //IplImage *int_img = Integral(img);
-	Integral(img,&int_img);
+  IplImage *int_img = Integral(img);
 
   // Create Fast Hessian Object
-  FastH(&fh,&int_img);
+  FastH(&fh,int_img);
 
   // Extract interest points and store in vector ipts
   ipts_size = getIpoints(&fh);
   
   // Create Surf Descriptor Object
-  //Surf_Constractor(&int_img, &fh, upright, ipts, size);
+  Surf_Constractor(int_img, &fh, upright, ipts, size);
 
   // Deallocate the integral image
-  //cvReleaseImage(&int_img);
+  cvReleaseImage(&int_img);
 
   return ipts_size;
 }

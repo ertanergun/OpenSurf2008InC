@@ -172,14 +172,6 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\bmpImage.c"
-				>
-			</File>
-			<File
-				RelativePath=".\src\cxarray_local.c"
-				>
-			</File>
-			<File
 				RelativePath=".\src\fasthessian.c"
 				>
 			</File>
@@ -214,18 +206,6 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\_cvaux_local.h"
-				>
-			</File>
-			<File
-				RelativePath=".\_cvmatrix_local.h"
-				>
-			</File>
-			<File
-				RelativePath=".\bmpImageheader.h"
-				>
-			</File>
-			<File
 				RelativePath=".\src\cv_local.h"
 				>
 			</File>
@@ -243,10 +223,6 @@
 			</File>
 			<File
 				RelativePath=".\src\cxcore_local.h"
-				>
-			</File>
-			<File
-				RelativePath=".\cxmics_local.h"
 				>
 			</File>
 			<File

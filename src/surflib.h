@@ -10,6 +10,7 @@
 #include "utils.h"
 #include "type.h"
 
+
 //! Library function builds array of described interest points
 int surfDetDes(IplImage *img,  /* image to find Ipoints in */
                        Ipoint ipts[], /* reference to vector of Ipoints */

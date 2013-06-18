@@ -1,3 +1,45 @@
+/*M///////////////////////////////////////////////////////////////////////////////////////
+//
+//  IMPORTANT: READ BEFORE DOWNLOADING, COPYING, INSTALLING OR USING.
+//
+//  By downloading, copying, installing or using the software you agree to this license.
+//  If you do not agree to this license, do not download, install,
+//  copy or use the software.
+//
+//
+//                          License Agreement
+//                For Open Source Computer Vision Library
+//
+// Copyright (C) 2000-2008, Intel Corporation, all rights reserved.
+// Copyright (C) 2009, Willow Garage Inc., all rights reserved.
+// Third party copyrights are property of their respective owners.
+//
+// Redistribution and use in source and binary forms, with or without modification,
+// are permitted provided that the following conditions are met:
+//
+//   * Redistribution's of source code must retain the above copyright notice,
+//     this list of conditions and the following disclaimer.
+//
+//   * Redistribution's in binary form must reproduce the above copyright notice,
+//     this list of conditions and the following disclaimer in the documentation
+//     and/or other materials provided with the distribution.
+//
+//   * The name of the copyright holders may not be used to endorse or promote products
+//     derived from this software without specific prior written permission.
+//
+// This software is provided by the copyright holders and contributors "as is" and
+// any express or implied warranties, including, but not limited to, the implied
+// warranties of merchantability and fitness for a particular purpose are disclaimed.
+// In no event shall the Intel Corporation or contributors be liable for any direct,
+// indirect, incidental, special, exemplary, or consequential damages
+// (including, but not limited to, procurement of substitute goods or services;
+// loss of use, data, or profits; or business interruption) however caused
+// and on any theory of liability, whether in contract, strict liability,
+// or tort (including negligence or otherwise) arising in any way out of
+// the use of this software, even if advised of the possibility of such damage.
+//
+//M*/
+
 #ifndef __OPENCV_CORE_TYPES_H__
 #define __OPENCV_CORE_TYPES_H__
 
@@ -351,7 +393,6 @@ typedef struct _IplImage
                                (==image->height*image->widthStep
                                in case of interleaved data)*/
     char *imageData;        /* Pointer to aligned image data.         */
-	float *intImage;
     int  widthStep;         /* Size of aligned image row in bytes.    */
     int  BorderMode[4];     /* Ignored by OpenCV.                     */
     int  BorderConst[4];    /* Ditto.                                 */
@@ -360,42 +401,6 @@ typedef struct _IplImage
                                needed for correct deallocation */
 }
 IplImage;
-
-typedef struct _Image
-{
-int  nSize;             /* sizeof(IplImage) */
-    int  ID;                /* version (=0)*/
-    int  nChannels;         /* Most of OpenCV functions support 1,2,3 or 4 channels */
-    int  alphaChannel;      /* Ignored by OpenCV */
-    int  depth;             /* Pixel depth in bits: IPL_DEPTH_8U, IPL_DEPTH_8S, IPL_DEPTH_16S,
-                               IPL_DEPTH_32S, IPL_DEPTH_32F and IPL_DEPTH_64F are supported.  */
-    char colorModel[4];     /* Ignored by OpenCV */
-    char channelSeq[4];     /* ditto */
-    int  dataOrder;         /* 0 - interleaved color channels, 1 - separate color channels.
-                               cvCreateImage can only create interleaved images */
-    int  origin;            /* 0 - top-left origin,
-                               1 - bottom-left origin (Windows bitmaps style).  */
-    int  align;             /* Alignment of image rows (4 or 8).
-                               OpenCV ignores it and uses widthStep instead.    */
-    int  width;             /* Image width in pixels.                           */
-    int  height;            /* Image height in pixels.                          */
-    struct _IplROI *roi;    /* Image ROI. If NULL, the whole image is selected. */
-    struct _IplImage *maskROI;      /* Must be NULL. */
-    void  *imageId;                 /* "           " */
-    struct _IplTileInfo *tileInfo;  /* "           " */
-    int  imageSize;         /* Image data size in bytes
-                               (==image->height*image->widthStep
-                               in case of interleaved data)*/
-    char *imageData;        /* Pointer to aligned image data.         */
-	float *IntImage;
-    int  widthStep;         /* Size of aligned image row in bytes.    */
-    int  BorderMode[4];     /* Ignored by OpenCV.                     */
-    int  BorderConst[4];    /* Ditto.                                 */
-    char *imageDataOrigin;  /* Pointer to very origin of image data
-                               (not necessarily aligned) -
-                               needed for correct deallocation */
-}
-Image;
 
 typedef struct _IplTileInfo IplTileInfo;
 

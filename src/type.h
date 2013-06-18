@@ -393,7 +393,6 @@ typedef struct _IplImage
                                (==image->height*image->widthStep
                                in case of interleaved data)*/
     char *imageData;        /* Pointer to aligned image data.         */
-	float *intImage;
     int  widthStep;         /* Size of aligned image row in bytes.    */
     int  BorderMode[4];     /* Ignored by OpenCV.                     */
     int  BorderConst[4];    /* Ditto.                                 */

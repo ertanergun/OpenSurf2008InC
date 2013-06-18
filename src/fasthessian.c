@@ -12,8 +12,6 @@ void FastH(FastHessian *fhts, IplImage *img)
 	fhts->img = img;
 	fhts->i_height = img->height;
 	fhts->i_width = img->width;
-
-	//Allocating ipts array.
 	for(i=0; i<N; i++){
 		fhts->ipts[i].x = 0;
 		fhts->ipts[i].y = 0;
@@ -130,7 +128,7 @@ void buildResponseLayer(FastHessian *fh, ResponseLayer *rl)
 	int l;							// lobe for this filter (filter size / 3)
 	int w;							// filter size
 	float inverse_area;				// normalisation factor
-	float Dxx = 0.0f, Dyy = 0.0f, Dxy = 0.0f;
+	float Dxx, Dyy, Dxy;
 	int r, c, ar = 0, index = 0,ac;
 
 	responses = rl->responses;
@@ -169,9 +167,6 @@ void buildResponseLayer(FastHessian *fh, ResponseLayer *rl)
 				  // Get the determinant of hessian response & laplacian sign
 					responses[index] = (Dxx * Dyy - 0.81f * Dxy * Dxy);
 					laplacian[index] = (Dxx + Dyy >= 0 ? 1 : 0);
-
-					/*rl->responses[index] = (Dxx * Dyy - 0.81f * Dxy * Dxy);
-					rl->laplacian[index] = (Dxx + Dyy >= 0 ? 1 : 0);*/
 
 				}
 		}
